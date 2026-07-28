@@ -1,9 +1,11 @@
 # fleet-guardian
 
-A Python closed-loop automation agent that polls a fleet of network devices concurrently,
-detects unhealthy ones, remediates them, and validates the fix — the
-detect / analyze / remediate / validate pattern used in real network and
-infrastructure automation platforms.
+A Python automation agent that polls a fleet of network devices over REST, checks
+their health, and automatically fixes the ones that are overloaded. Uses multithreading
+to check devices in parallel instead of one at a time. Every step gets logged to SQLite
+so you can look back at what happened during any run. Includes a Flask API to trigger
+runs and check status, plus a test suite that verifies the whole detect-fix-verify
+cycle actually works.
 
 ## What this demonstrates
 
