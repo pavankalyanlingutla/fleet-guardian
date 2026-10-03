@@ -62,6 +62,29 @@ pytest tests/ -v
 python3 -m unittest tests.test_orchestrator -v
 ```
 
+## React dashboard (in progress)
+
+A small React + Vite dashboard in `frontend/` that talks to the Flask control API:
+
+- Polls `GET /devices` every 5 seconds and shows each device's health, CPU, and connections
+- **Run automation** button calls `POST /automation/run` and shows which devices were fixed and validated
+- Shows past runs from `GET /automation/history`
+
+The Flask API enables CORS for `http://localhost:5173` (the Vite dev server) so the browser can call it.
+
+Run it in two terminals:
+
+```bash
+# Terminal 1 - API + simulated devices
+pip install -r requirements.txt
+python3 -m app.api
+
+# Terminal 2 - dashboard
+cd frontend
+npm install
+npm run dev     # open http://localhost:5173
+```
+
 ## API
 
 | Method | Path                  | Description                                  |
