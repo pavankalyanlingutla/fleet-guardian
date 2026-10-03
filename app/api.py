@@ -18,6 +18,7 @@ from __future__ import annotations
 from dataclasses import asdict
 
 from flask import Flask, jsonify
+from flask_cors import CORS
 
 from .db import RunStore
 from .device_client import DeviceClient, DeviceUnreachableError
@@ -27,6 +28,10 @@ from .orchestrator import ClosedLoopOrchestrator
 
 def create_app(db_path: str = "automation_history.db") -> Flask:
     app = Flask(__name__)
+
+    # Allow the React dev server (Vite, port 5173) to call this API from the browser.
+    # Browsers block cross-origin requests unless the server opts in with CORS headers.
+    CORS(app, origins=["http://localhost:5173", "http://127.0.0.1:5173"])
 
     clients = [
         DeviceClient(device_id=d["device_id"], base_url=f"http://127.0.0.1:{d['port']}")
